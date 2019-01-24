@@ -2,7 +2,8 @@ export const fakemovies = [
   {
     _id: 1,
     title: "Terminator",
-    genre: "Action"
+    genre: "Action",
+    liked: true
   },
   {
     _id: 2,

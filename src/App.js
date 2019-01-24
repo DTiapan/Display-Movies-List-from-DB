@@ -1,12 +1,21 @@
 import React, { Component } from "react";
 import "./App.css";
 import { fakemovies } from "./fakeGenreService";
+import Like from "./components/common/like";
 
 class App extends Component {
   state = {
     movies: fakemovies
   };
 
+  handleLike = movie => {
+    //console.log(movie + " like clicked");
+    const movies = [...this.state.movies];
+    const index = movies.indexOf(movie);
+    movies[index] = { ...movies[index] };
+    movies[index].liked = !movies[index].liked;
+    this.setState({ movies });
+  };
   handleDelete = movie => {
     const movies = this.state.movies.filter(m => m._id !== movie._id);
     this.setState({ movies });
@@ -29,6 +38,7 @@ class App extends Component {
               <th scope="col">Title</th>
               <th scope="col">Genre</th>
               <th scope="col" />
+              <th scope="col" />
             </tr>
           </thead>
 
@@ -39,6 +49,12 @@ class App extends Component {
                   <th scope="row">{item._id}</th>
                   <td>{item.title}</td>
                   <td>{item.genre}</td>
+                  <td>
+                    <Like
+                      onClick={() => this.handleLike(item)}
+                      liked={item.liked}
+                    />
+                  </td>
                   <td>
                     <button
                       onClick={() => this.handleDelete(item)}
