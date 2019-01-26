@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import "./App.css";
 import { fakemovies } from "./fakeGenreService";
 import Pagination from "./components/common/pagination";
-import Like from "./components/common/like";
 import { paginate } from "./utils/paginate";
 import Listgroup from "./components/common/listgroup";
+import MoviesTable from "./components/MoviesTable";
 
 class App extends Component {
   state = {
@@ -95,45 +95,12 @@ class App extends Component {
               />
             </div>
             <div className="col">
-              <main className="container">
-                <table className="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">Title</th>
-                      <th scope="col">Rating</th>
-                      <th scope="col">Genre</th>
-                      <th scope="col" />
-                      <th scope="col" />
-                    </tr>
-                  </thead>
+              <MoviesTable
+                movies={movies}
+                onDelete={this.handleDelete}
+                onLike={this.handleLike}
+              />
 
-                  {movies.map(item => {
-                    return (
-                      <tbody key={item._id}>
-                        <tr>
-                          <td>{item.title}</td>
-                          <td>{item.rating}</td>
-                          <td>{item.genre}</td>
-                          <td>
-                            <Like
-                              onClick={() => this.handleLike(item)}
-                              liked={item.liked}
-                            />
-                          </td>
-                          <td>
-                            <button
-                              onClick={() => this.handleDelete(item)}
-                              className="btn btn-danger"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    );
-                  })}
-                </table>
-              </main>
               <Pagination
                 itemsCount={filtered.length}
                 pageSize={pageSize}
